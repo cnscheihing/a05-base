@@ -10,9 +10,20 @@ describe DCCBurger do
   describe 'custom burger' do
     let(:order_type) { 'custom' }
 
-    it 'buys burger' do
+    it 'buys non-veggie custom burger' do
       test_burger = CustomBurger.new(bread_type, ingredients, false)
       expect(dcc_burger.order!(order_type, test_burger, 3000)).to equal(true)
+    end
+
+    it 'buys veggie custom burger' do
+      test_burger = CustomBurger.new(bread_type, ingredients, true)
+      expect(dcc_burger.order!(order_type, test_burger, 3000)).to equal(true)
+    end
+
+    it 'correct price for veggie custom burger' do
+      test_burger = CustomBurger.new(bread_type, ingredients, true)
+      dcc_burger.custom_burger_price(test_burger)
+      expect(test_burger.price).to equal(2840)
     end
   end
 

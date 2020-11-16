@@ -7,13 +7,13 @@ class DCCBurger
   def order!(type, choice, wallet_money)
     validate_type! type
 
-    if type == 'custom'
+    if type.eql?("custom")
       validate_ingredients! choice
       validate_bread_type! choice
       validate_veggie! choice
 
       custom_burger_price choice
-    elsif type == 'original'
+    elsif type.eql?("original")
       validate_availability! choice
     end
 
