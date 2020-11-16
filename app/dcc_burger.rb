@@ -76,7 +76,8 @@ class DCCBurger
     return unless custom_burger.veggie
 
     custom_burger.ingredients.each do |ingredient|
-      if ingredient.type == 'non-veggie'
+      # if ingredient.type == 'non-veggie'
+      if ingredient.type.eql?("non-veggie")
         raise_error 'Quieres una hamburguesa veggie pero tiene un ingrediente no veggie'
       end
     end
