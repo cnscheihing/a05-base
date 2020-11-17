@@ -21,6 +21,12 @@ describe DCCBurger do
       expect(dcc_burger.order!(order_type, test_burger, 3000)).to equal(true)
     end
 
+    it 'correct price for non-veggie custom burger' do
+      test_burger = CustomBurger.new(bread_type, ingredients, false)
+      dcc_burger.custom_burger_price(test_burger)
+      expect(test_burger.price).to equal(2890)
+    end
+
     it 'correct price for veggie custom burger' do
       test_burger = CustomBurger.new(bread_type, ingredients, true)
       dcc_burger.custom_burger_price(test_burger)
@@ -37,7 +43,16 @@ describe DCCBurger do
     end
   end
 
-  describe 'validations' do
+  describe 'single validations' do
+    let(:order_type) { 'custom' }
+
+    it 'validate_veggie with veggie custom burger doesnt raise error' do
+      test_burger = CustomBurger.new(bread_type, ingredients, false)
+      expect(dcc_burger.send(:validate_veggie!, test_burger)).to equal(nil)
+    end
+  end
+
+  describe 'global validations' do
     it 'is invalid if not valid type' do
       expect { dcc_burger.order!('noop', nil, 0) }
         .to raise_error("Tipo de hamburguesa inválido, puede sólo ser: original, custom")
